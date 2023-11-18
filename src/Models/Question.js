@@ -116,7 +116,7 @@ function AddQuestion({setQ}) {
         background: "#0077ff",
     }
     const[question,setQuestion]=useState('')
-    const[type,setType]=useState('')
+    const[type,setType]=useState('1')
     const handleClick=(e)=>{
         e.preventDefault()
         const q= {question,type}
@@ -128,7 +128,7 @@ function AddQuestion({setQ}) {
                     setQ(res)
                     toggleAdd()
                     setQuestion("")
-                    setType("")
+                    setType("1")
                 })
 
         })
@@ -141,10 +141,11 @@ function AddQuestion({setQ}) {
                        value={question}
                        onChange={(e)=>setQuestion(e.target.value)}
                 />
-                <input id="type"
-                       value={type}
-                       onChange={(e)=>setType(e.target.value)}
-                />
+                <select value={type} onChange={(e)=>setType(e.target.value)} id="type">
+                    <option value="1">SingleChoice</option>
+                    <option value="2">MultipleChoice</option>
+                    <option value="3">CalculationTask</option>
+                </select>
                 <button color="secondary" onClick={handleClick}>
                     Submit
                 </button>

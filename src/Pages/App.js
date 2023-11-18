@@ -3,8 +3,6 @@ import React from 'react';
 import {Link} from "react-router-dom";
 
 function App() {
-
-
     return (
         <div>
             <div><Link to={"/superAdmin"}>SuperAdmin</Link></div>

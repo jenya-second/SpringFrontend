@@ -7,6 +7,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Login from "./Pages/Login";
 import {QuestionPage} from "./Models/Question";
 import {UpdateQuestion} from "./Pages/UpdateQuestion";
+import StudentPage from "./Models/Student";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,6 +15,7 @@ root.render(
         <Routes>
             <Route path="/" element={<App/>}/>
             <Route path="/login" element={<Login/>}/>
+            <Route path="/student" element={<StudentPage/>}/>
             <Route path="/question/:id" element ={<UpdateQuestion/>} action={({ params }) => {}}/>
             <Route path="/question" element={<QuestionPage/>}/>
         </Routes>
