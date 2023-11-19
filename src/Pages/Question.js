@@ -1,34 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
+import {addQuestion, delQuestion, getQuestions} from "../Requests/QuestionRequests";
+import {toggleAddForm} from "../Requests/Utils";
 
-function getQuestions(){
-    return fetch(process.env.REACT_APP_LOCAL_URL+"/questions")
-        .then((res)=>{
-            if(res.ok){
-                return res
-            }
-        })
-}
-
-function delQuestion(id){
-    return fetch(process.env.REACT_APP_LOCAL_URL+"/del_question",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(id)
-    })
-}
-
-function addQuestion(q){
-    return fetch(process.env.REACT_APP_LOCAL_URL+"/add_question",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(q)
-    })
-}
-function toggleAdd(){
-    const el = document.getElementById("addq")
-    el.hidden=!el.hidden
-}
 export function QuestionPage() {
     let st={
         verticalAlign: "top",
@@ -45,19 +19,14 @@ export function QuestionPage() {
     const[questions,setQuestions]=useState([])
     useEffect(()=>{
         getQuestions()
-            .then(res => res.json())
-            .then((result) => {
-                    setQuestions(result);
-                    return result
-                }
-            )
+            .then(setQuestions)
     },[])
 
     return(
         <div style={ss}>
             <AddQuestion setQ={setQuestions}/>
             <div>Questions</div>
-            <div onClick={toggleAdd}>Add question</div>
+            <div onClick={toggleAddForm}>Add question</div>
             <div style={st}>
                 {questions.map(question=>(
                     <QuestionMin setQ={setQuestions} question={question} key={question.id}/>
@@ -87,10 +56,7 @@ function QuestionMin({setQ,question}) {
         delQuestion(question.id)
         .then(()=>{
             getQuestions()
-                .then(res => res.json())
-                .then((res)=>{
-                    setQ(res)
-                })
+                .then(setQ)
         })
     }
     return(
@@ -123,10 +89,9 @@ function AddQuestion({setQ}) {
         addQuestion(q)
         .then(()=>{
             getQuestions()
-                .then(res => res.json())
                 .then((res)=>{
                     setQ(res)
-                    toggleAdd()
+                    toggleAddForm()
                     setQuestion("")
                     setType("1")
                 })
@@ -134,8 +99,8 @@ function AddQuestion({setQ}) {
         })
     }
     return(
-        <div id="addq" style={st} hidden>
-            <div onClick={toggleAdd}>X</div>
+        <div id="addForm" style={st} hidden>
+            <div onClick={toggleAddForm}>X</div>
             <form noValidate autoComplete="off">
                 <input id="question"
                        value={question}
