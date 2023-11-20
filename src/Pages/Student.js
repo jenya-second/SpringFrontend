@@ -35,7 +35,7 @@ export function StudentMin({setQ,student}){
     return(
         <div>
             <div>
-                <div>{student.id + " " + student.name + " " + student.university.name + " " + student.group}</div>
+                <div>{student.id + " " + student.name + " " + student.university?.name + " " + student.group}</div>
             </div>
             <div onClick={del}>delete</div>
         </div>

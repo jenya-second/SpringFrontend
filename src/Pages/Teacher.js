@@ -1,48 +1,48 @@
 import React, {useEffect, useRef, useState} from "react";
 import {ScrollBox, toggleAddForm} from "../Requests/Utils";
 import {getUniversities} from "../Requests/UniversityRequests";
-import {addAdmin, delAdmin, getAdmins} from "../Requests/AdminRequests";
+import {addTeacher, delTeacher, getTeachers} from "../Requests/TeacherRequests";
 
-export default function AdminPage(){
-    const [admins,setAdmins]=useState([])
+export default function TeacherPage(){
+    const [teachers,setTeachers]=useState([])
 
     useEffect(() => {
-        getAdmins()
-            .then(setAdmins)
+        getTeachers()
+            .then(setTeachers)
     }, []);
 
     return <div>
-        <AddAdmin setQ={setAdmins}/>
-        <div>Admins</div>
-        <div onClick={toggleAddForm}>Add admin</div>
+        <AddTeacher setQ={setTeachers}/>
+        <div>Teachers</div>
+        <div onClick={toggleAddForm}>Add Teacher</div>
         <div>
-            {admins.map(admin=>(
-                <AdminMin setQ={setAdmins} admin={admin} key={admin.id}/>
+            {teachers.map(teacher=>(
+                <TeacherMin setQ={setTeachers} teacher={teacher} key={teacher.id}/>
             ))}
         </div>
     </div>
 }
 
-export function AdminMin({setQ,admin}){
+export function TeacherMin({setQ,teacher}){
     const del=(e)=>{
         e.preventDefault()
-        delAdmin(admin.id)
+        delTeacher(teacher.id)
             .then(()=>{
-                getAdmins()
+                getTeachers()
                     .then(setQ)
             })
     }
     return(
         <div>
             <div>
-                <div>{admin.id + " " + admin.name + " " + admin.login + " " + admin.pass + " " + admin.university?.name}</div>
+                <div>{teacher.id + " " + teacher.name+ " " + teacher.login+ " " + teacher.pass + " " + teacher.university?.name}</div>
             </div>
             <div onClick={del}>delete</div>
         </div>
     )
 }
 
-function AddAdmin({setQ}) {
+function AddTeacher({setQ}) {
     let st={
         position:"fixed",
         width: "50%",
@@ -53,29 +53,31 @@ function AddAdmin({setQ}) {
     }
     const scrollRef = useRef(null);
     const[name,setName]=useState('')
-    const[login,setLogin]=useState('')
     const[pass,setPass]=useState('')
+    const[login,setLogin]=useState('')
+    const[tgAccount,setTgAccount]=useState('')
     const[university,setUniversity]=useState({})
     const[universities,setUniversities]=useState([])
     const handleClick=(e)=>{
         e.preventDefault()
-        const q= {name,login,pass,university}
-        addAdmin(q)
+        const q= {name,login,pass,tgAccount,university}
+        addTeacher(q)
             .then(()=>{
-                getAdmins()
+                getTeachers()
                     .then((res)=>{
                         setQ(res)
                         toggleAddForm()
                         setName("")
-                        setLogin("")
                         setPass("")
+                        setLogin("")
+                        setTgAccount("")
                         setUniversity({})
                         scrollRef.current.a();
                     })
             })
     }
     useEffect(()=>{
-        getUniversities ()
+        getUniversities()
             .then(setUniversities)
     },[])
 
@@ -93,6 +95,10 @@ function AddAdmin({setQ}) {
             <input id="pass"
                    value={pass}
                    onChange={(e)=>setPass(e.target.value)}
+            />
+            <input id="tgAccount"
+                   value={tgAccount}
+                   onChange={(e)=>setTgAccount(e.target.value)}
             />
             <ScrollBox ref={scrollRef} setQ={setUniversity} list={universities}/>
             <button color="secondary" onClick={handleClick}>

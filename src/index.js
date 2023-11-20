@@ -11,6 +11,7 @@ import StudentPage from "./Pages/Student";
 import UniversityPage from "./Pages/University";
 import SuperAdminPage from "./Pages/SuperAdmin";
 import AdminPage from "./Pages/Admin";
+import TeacherPage from "./Pages/Teacher";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,6 +25,7 @@ root.render(
             <Route path="/university" element={<UniversityPage/>}/>
             <Route path="/superAdmin" element={<SuperAdminPage/>}/>
             <Route path="/admin" element={<AdminPage/>}/>
+            <Route path="/teacher" element={<TeacherPage/>}/>
         </Routes>
     </BrowserRouter>
 );
