@@ -50,12 +50,8 @@ export const ScrollBox = forwardRef((props,ref)=> {
         }
     })
     useImperativeHandle(ref, () => ({
-        a(){
-        return setInp('');
-    }
+        a(){return setInp('');}
     }));
-
-
     return <div ref={ref}>
         <input id="scrollInput"
                value={inp}

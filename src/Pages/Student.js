@@ -53,13 +53,14 @@ function AddStudent({setQ}) {
     }
     const scrollRef = useRef(null);
     const[name,setName]=useState('')
-    const[chatId,setChatId]=useState(-1)
+    const[chatId,setChatId]=useState('')
     const[group,setGroup]=useState('')
     const[university,setUniversity]=useState({})
     const[universities,setUniversities]=useState([])
     const handleClick=(e)=>{
         e.preventDefault()
-        const q= {name,chatId,group,university}
+        let a= parseInt(chatId)
+        const q= {name,chatId:a,group,university}
         addStudent(q)
             .then(()=>{
                 getStudents()
@@ -67,7 +68,7 @@ function AddStudent({setQ}) {
                         setQ(res)
                         toggleAddForm()
                         setName("")
-                        setChatId(-1)
+                        setChatId("")
                         setGroup("")
                         setUniversity({})
                         scrollRef.current.a();
@@ -88,7 +89,7 @@ function AddStudent({setQ}) {
             />
             <input id="chatId"
                    value={chatId}
-                   onChange={(e)=>setChatId(parseInt(e.target.value))}
+                   onChange={(e)=>setChatId(e.target.value)}
             />
             <input id="group"
                    value={group}

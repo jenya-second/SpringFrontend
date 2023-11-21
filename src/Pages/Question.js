@@ -64,7 +64,7 @@ function QuestionMin({setQ,question}) {
             <div>
                 <div style={st}>{question.id}</div>
                 <div style={st}>{question.type}</div>
-                <div style={st}>{question.question}</div>
+                <div style={st}>{question.name}</div>
             </div>
             <Link style={st2} to={"/question/"+question.id}>update</Link>
             <div style={st2} onClick={del}>delete</div>
@@ -81,18 +81,18 @@ function AddQuestion({setQ}) {
         top:"25%",
         background: "#0077ff",
     }
-    const[question,setQuestion]=useState('')
+    const[name,setName]=useState('')
     const[type,setType]=useState('1')
     const handleClick=(e)=>{
         e.preventDefault()
-        const q= {question,type}
+        const q= {name,type}
         addQuestion(q)
         .then(()=>{
             getQuestions()
                 .then((res)=>{
                     setQ(res)
                     toggleAddForm()
-                    setQuestion("")
+                    setName("")
                     setType("1")
                 })
 
@@ -102,9 +102,9 @@ function AddQuestion({setQ}) {
         <div id="addForm" style={st} hidden>
             <div onClick={toggleAddForm}>X</div>
             <form noValidate autoComplete="off">
-                <input id="question"
-                       value={question}
-                       onChange={(e)=>setQuestion(e.target.value)}
+                <input id="name"
+                       value={name}
+                       onChange={(e)=>setName(e.target.value)}
                 />
                 <select value={type} onChange={(e)=>setType(e.target.value)} id="type">
                     <option value="1">SingleChoice</option>

@@ -12,6 +12,8 @@ import UniversityPage from "./Pages/University";
 import SuperAdminPage from "./Pages/SuperAdmin";
 import AdminPage from "./Pages/Admin";
 import TeacherPage from "./Pages/Teacher";
+import {CollectionPage} from "./Pages/Collection";
+import {UpdateCollection} from "./Pages/UpdateCollection";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -26,6 +28,8 @@ root.render(
             <Route path="/superAdmin" element={<SuperAdminPage/>}/>
             <Route path="/admin" element={<AdminPage/>}/>
             <Route path="/teacher" element={<TeacherPage/>}/>
+            <Route path="/collection/:id" element ={<UpdateCollection/>} action={({ params }) => {}}/>
+            <Route path="/collection" element={<CollectionPage/>}/>
         </Routes>
     </BrowserRouter>
 );
