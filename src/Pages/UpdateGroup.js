@@ -1,56 +1,56 @@
 import {useParams} from "react-router-dom";
 import React, {useEffect, useRef, useState} from "react";
 import {ScrollBox, toggleAddForm} from "../Requests/Utils";
-import {addCollectionToQuestion, delCollectionToQuestion, getCollectionById} from "../Requests/CollectionRequests";
-import {getQuestions} from "../Requests/QuestionRequests";
+import {addGroupToQuestion, delGroupToQuestion, getGroupById} from "../Requests/GroupRequests";
 
-export function UpdateCollection() {
+export function UpdateGroup() {
     let params = useParams();
-    const[collection, setCollection]=useState({questions:[]})
+    const[group, setGroup]=useState({questions:[]})
+    // const[collection, setCollection]=useState({questions:[]})
 
     useEffect(()=>{
-        getCollectionById(params.id)
+        getGroupById(params.id)
             .then((res)=>{
-                setCollection(res)
+                setGroup(res)
             })
     },[])
 
     return(
         <div>
-            <AddCollectionToQuestion setQ={setCollection}/>
-            <div>{collection.id+" "+collection.name}</div>
+            <AddGroupToQuestion setQ={setGroup}/>
+            <div>{group.id+" "+group.name + "   collection: "+ group.collection?.name}</div>
             <div onClick={toggleAddForm}>Add question</div>
             <div>
-                {collection.questions.map(question=>(
-                    <CollectionToQuestionMin key={question.id} question={question} setQ={setCollection}/>
+                {group.questions.map(question=>(
+                    <GroupToQuestionMin key={question.id} question={question} setQ={setGroup}/>
                 ))}
             </div>
         </div>
     )
 }
 
-function CollectionToQuestionMin({setQ,question}){
+function GroupToQuestionMin({setQ,question}){
     let params = useParams();
     const del=(e)=>{
         e.preventDefault()
-        let q={questionId:question.id,collectionId:params.id}
-        delCollectionToQuestion(q)
+        let q= {groupId:params.id,questionId:question.id}
+        delGroupToQuestion(q)
             .then(()=>{
-                getCollectionById(params.id)
+                getGroupById(params.id)
                     .then(setQ)
             })
     }
     return(
         <div>
             <div>
-                <div>{question.id + " " + question.type + " " + question.name}</div>
+                <div>{question.id + " " + question.name}</div>
             </div>
             <div onClick={del}>delete</div>
         </div>
     )
 }
 
-function AddCollectionToQuestion({setQ}) {
+function AddGroupToQuestion({setQ}) {
     let params = useParams();
     let st={
         position:"fixed",
@@ -65,10 +65,10 @@ function AddCollectionToQuestion({setQ}) {
     const[questions,setQuestions]=useState([])
     const handleClick=(e)=>{
         e.preventDefault()
-        const q= {questionId:question.id,collectionId:params.id}
-        addCollectionToQuestion(q)
+        const q= {groupId:params.id,questionId:question.id}
+        addGroupToQuestion(q)
             .then(()=>{
-                getCollectionById(params.id)
+                getGroupById(params.id)
                     .then((res)=>{
                         setQ(res)
                         toggleAddForm()
@@ -78,8 +78,10 @@ function AddCollectionToQuestion({setQ}) {
             })
     }
     useEffect(()=>{
-        getQuestions()
-            .then(setQuestions)
+        getGroupById(params.id)
+            .then((res)=>{
+                setQuestions(res.collection.questions)
+            })
     },[])
 
     return <div id="addForm" style={st} hidden>

@@ -14,6 +14,12 @@ import AdminPage from "./Pages/Admin";
 import TeacherPage from "./Pages/Teacher";
 import {CollectionPage} from "./Pages/Collection";
 import {UpdateCollection} from "./Pages/UpdateCollection";
+import {DisciplinePage} from "./Pages/Discipline";
+import {UpdateDiscipline} from "./Pages/UpdateDiscipline";
+import {GroupPage} from "./Pages/Group";
+import {UpdateGroup} from "./Pages/UpdateGroup";
+import {TestPage} from "./Pages/Test";
+import {UpdateTest} from "./Pages/UpdateTest";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -30,6 +36,12 @@ root.render(
             <Route path="/teacher" element={<TeacherPage/>}/>
             <Route path="/collection/:id" element ={<UpdateCollection/>} action={({ params }) => {}}/>
             <Route path="/collection" element={<CollectionPage/>}/>
+            <Route path="/discipline/:id" element ={<UpdateDiscipline/>} action={({ params }) => {}}/>
+            <Route path="/discipline" element={<DisciplinePage/>}/>
+            <Route path="/group/:id" element ={<UpdateGroup/>} action={({ params }) => {}}/>
+            <Route path="/group" element={<GroupPage/>}/>
+            <Route path="/test/:id" element ={<UpdateTest/>} action={({ params }) => {}}/>
+            <Route path="/test" element={<TestPage/>}/>
         </Routes>
     </BrowserRouter>
 );

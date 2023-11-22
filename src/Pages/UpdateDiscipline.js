@@ -1,56 +1,56 @@
 import {useParams} from "react-router-dom";
 import React, {useEffect, useRef, useState} from "react";
+import {getCollections} from "../Requests/CollectionRequests";
 import {ScrollBox, toggleAddForm} from "../Requests/Utils";
-import {addCollectionToQuestion, delCollectionToQuestion, getCollectionById} from "../Requests/CollectionRequests";
-import {getQuestions} from "../Requests/QuestionRequests";
+import {addDisciplineToCollection, delDisciplineToCollection, getDisciplineById} from "../Requests/DisciplineRequests";
 
-export function UpdateCollection() {
+export function UpdateDiscipline() {
     let params = useParams();
-    const[collection, setCollection]=useState({questions:[]})
+    const[discipline, setDiscipline]=useState({collections:[]})
 
     useEffect(()=>{
-        getCollectionById(params.id)
+        getDisciplineById(params.id)
             .then((res)=>{
-                setCollection(res)
+                setDiscipline(res)
             })
     },[])
 
     return(
         <div>
-            <AddCollectionToQuestion setQ={setCollection}/>
-            <div>{collection.id+" "+collection.name}</div>
-            <div onClick={toggleAddForm}>Add question</div>
+            <AddDisciplineToCollection setQ={setDiscipline}/>
+            <div>{discipline.id+" "+discipline.name}</div>
+            <div onClick={toggleAddForm}>Add collection</div>
             <div>
-                {collection.questions.map(question=>(
-                    <CollectionToQuestionMin key={question.id} question={question} setQ={setCollection}/>
+                {discipline.collections.map(collection=>(
+                    <DisciplineToCollectionMin key={collection.id} collection={collection} setQ={setDiscipline}/>
                 ))}
             </div>
         </div>
     )
 }
 
-function CollectionToQuestionMin({setQ,question}){
+function DisciplineToCollectionMin({setQ,collection}){
     let params = useParams();
     const del=(e)=>{
         e.preventDefault()
-        let q={questionId:question.id,collectionId:params.id}
-        delCollectionToQuestion(q)
+        let q= {collectionId:collection.id,disciplineId:params.id}
+        delDisciplineToCollection(q)
             .then(()=>{
-                getCollectionById(params.id)
+                getDisciplineById(params.id)
                     .then(setQ)
             })
     }
     return(
         <div>
             <div>
-                <div>{question.id + " " + question.type + " " + question.name}</div>
+                <div>{collection.id + " " + collection.name}</div>
             </div>
             <div onClick={del}>delete</div>
         </div>
     )
 }
 
-function AddCollectionToQuestion({setQ}) {
+function AddDisciplineToCollection({setQ}) {
     let params = useParams();
     let st={
         position:"fixed",
@@ -61,31 +61,31 @@ function AddCollectionToQuestion({setQ}) {
         background: "#0077ff",
     }
     const scrollRef = useRef(null);
-    const[question,setQuestion]=useState({})
-    const[questions,setQuestions]=useState([])
+    const[collection,setCollection]=useState({})
+    const[collections,setCollections]=useState([])
     const handleClick=(e)=>{
         e.preventDefault()
-        const q= {questionId:question.id,collectionId:params.id}
-        addCollectionToQuestion(q)
+        const q= {collectionId:collection.id,disciplineId:params.id}
+        addDisciplineToCollection(q)
             .then(()=>{
-                getCollectionById(params.id)
+                getDisciplineById(params.id)
                     .then((res)=>{
                         setQ(res)
                         toggleAddForm()
-                        setQuestion({})
+                        setCollection({})
                         scrollRef.current.a();
                     })
             })
     }
     useEffect(()=>{
-        getQuestions()
-            .then(setQuestions)
+        getCollections()
+            .then(setCollections)
     },[])
 
     return <div id="addForm" style={st} hidden>
         <div onClick={toggleAddForm}>X</div>
         <form noValidate autoComplete="off">
-            <ScrollBox ref={scrollRef} setQ={setQuestion} list={questions}/>
+            <ScrollBox ref={scrollRef} setQ={setCollection} list={collections}/>
             <button color="secondary" onClick={handleClick}>
                 Submit
             </button>

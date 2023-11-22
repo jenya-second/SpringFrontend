@@ -11,7 +11,7 @@ function App() {
             <div><Link to={"/student"}>Student</Link></div>
             <div><Link to={"/university"}>University</Link></div>
             <div><Link to={"/students_answer"}>StudentsAnswer</Link></div>
-            <div><Link to={"/disciplines"}>Disciplines</Link></div>
+            <div><Link to={"/discipline"}>Disciplines</Link></div>
             <div><Link to={"/collection"}>Collection</Link></div>
             <div><Link to={"/group"}>Group</Link></div>
             <div><Link to={"/question"}>Question</Link></div>
