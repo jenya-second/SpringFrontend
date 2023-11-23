@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import {addQuestion, delQuestion, getQuestions} from "../Requests/QuestionRequests";
-import {toggleAddForm} from "../Requests/Utils";
+import {toggleAddForm} from "../Utils/Utils";
 
 export function QuestionPage() {
     let st={

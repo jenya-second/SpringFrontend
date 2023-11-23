@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {ScrollBox, toggleAddForm} from "../Requests/Utils";
+import {ScrollBox, toggleAddForm} from "../Utils/Utils";
 import {getUniversities} from "../Requests/UniversityRequests";
 import {addTeacher, delTeacher, getTeachers} from "../Requests/TeacherRequests";
 

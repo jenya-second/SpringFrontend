@@ -1,5 +1,5 @@
 import React, {useEffect,useState} from "react";
-import {toggleAddForm} from "../Requests/Utils";
+import {toggleAddForm} from "../Utils/Utils";
 import {addCollection, delCollection, getCollections} from "../Requests/CollectionRequests";
 import {Link} from "react-router-dom";
 

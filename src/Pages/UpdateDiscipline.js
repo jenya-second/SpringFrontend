@@ -1,7 +1,7 @@
 import {useParams} from "react-router-dom";
 import React, {useEffect, useRef, useState} from "react";
 import {getCollections} from "../Requests/CollectionRequests";
-import {ScrollBox, toggleAddForm} from "../Requests/Utils";
+import {ScrollBox, toggleAddForm} from "../Utils/Utils";
 import {addDisciplineToCollection, delDisciplineToCollection, getDisciplineById} from "../Requests/DisciplineRequests";
 
 export function UpdateDiscipline() {

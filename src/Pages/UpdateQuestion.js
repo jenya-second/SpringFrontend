@@ -2,7 +2,7 @@ import {useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {getQuestionById} from "../Requests/QuestionRequests";
 import {addAnswer, delAnswer, getAnswersByQuestion} from "../Requests/AnswerRequests";
-import {toggleAddForm} from "../Requests/Utils";
+import {toggleAddForm} from "../Utils/Utils";
 
 export function UpdateQuestion() {
     let params = useParams();

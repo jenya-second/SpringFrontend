@@ -1,7 +1,7 @@
 import {useParams} from "react-router-dom";
 import React, {useEffect, useRef, useState} from "react";
 import {getGroupsByCollectionId} from "../Requests/GroupRequests";
-import {ScrollBox, toggleAddForm} from "../Requests/Utils";
+import {ScrollBox, toggleAddForm} from "../Utils/Utils";
 import {
     addTestToGroup,
     delTestToGroup,

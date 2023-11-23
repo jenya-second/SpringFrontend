@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {addStudent, delStudent, getStudents} from "../Requests/StudentRequests";
-import {ScrollBox, toggleAddForm} from "../Requests/Utils";
+import {ScrollBox, toggleAddForm} from "../Utils/Utils";
 import {getUniversities} from "../Requests/UniversityRequests";
 
 export default function StudentPage(){

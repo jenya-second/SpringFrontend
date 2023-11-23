@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {toggleAddForm} from "../Requests/Utils";
+import {toggleAddForm} from "../Utils/Utils";
 import {addSuperAdmin, delSuperAdmin, getSuperAdmins} from "../Requests/SuperAdminRequests";
 
 

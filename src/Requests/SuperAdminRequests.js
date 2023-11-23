@@ -1,4 +1,4 @@
-import {getQuery, postQuery} from "./Utils";
+import {getQuery, postQuery} from "../Utils/Utils";
 
 export function getSuperAdmins(){
     return getQuery("super_admins")

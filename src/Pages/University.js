@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {toggleAddForm} from "../Requests/Utils";
+import {toggleAddForm} from "../Utils/Utils";
 import {addUniversity, delUniversity, getUniversities} from "../Requests/UniversityRequests";
 
 

@@ -1,4 +1,4 @@
-import {getQuery, postQuery} from "./Utils";
+import {getQuery, postQuery} from "../Utils/Utils";
 
 export function getCollectionById(id){
     return postQuery("collection_by_id",id)

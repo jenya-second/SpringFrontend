@@ -1,4 +1,4 @@
-import {getQuery, postQuery} from "./Utils";
+import {getQuery, postQuery} from "../Utils/Utils";
 
 export function getDisciplines(){
     return getQuery("disciplines")

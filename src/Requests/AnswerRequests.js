@@ -1,4 +1,4 @@
-import {postQuery} from "./Utils";
+import {postQuery} from "../Utils/Utils";
 
 export function getAnswersByQuestion(id){
     return postQuery("answers_by_question",id)

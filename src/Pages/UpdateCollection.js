@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom";
 import React, {useEffect, useRef, useState} from "react";
-import {ScrollBox, toggleAddForm} from "../Requests/Utils";
+import {ScrollBox, toggleAddForm} from "../Utils/Utils";
 import {addCollectionToQuestion, delCollectionToQuestion, getCollectionById} from "../Requests/CollectionRequests";
 import {getQuestions} from "../Requests/QuestionRequests";
 

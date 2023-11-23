@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {ScrollBox, toggleAddForm} from "../Requests/Utils";
+import {ScrollBox, toggleAddForm} from "../Utils/Utils";
 import {addGroup, delGroup, getGroups} from "../Requests/GroupRequests";
 import {Link} from "react-router-dom";
 import {getCollections} from "../Requests/CollectionRequests";
