@@ -1,9 +1,14 @@
 import React, {useState} from 'react';
-import {postQuery} from "../Utils/Utils";
+import {createAuthProvider} from "../Utils/Auth";
+export const {useAuth, authFetch, login, logout, getName} = createAuthProvider();
 
 export default function Login() {
     const[name,setName]=useState('')
     const[pass,setPass]=useState('')
+    const [logged] = useAuth();
+    if(logged){
+        window.location.replace("/")
+    }
 
     const handleClick=(e)=>{
         e.preventDefault()
@@ -21,8 +26,13 @@ export default function Login() {
             })
             .then(res=>res.json())
             .then((res)=> {
-                postQuery("claim", res.accessToken)
-                    .then(console.log)
+                if(res?.res){
+                    alert("Can't find user")
+                }
+                else{
+                    login(res,name)
+                    window.location.replace("/")
+                }
             })
     }
 

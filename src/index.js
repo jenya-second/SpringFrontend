@@ -20,29 +20,33 @@ import {GroupPage} from "./Pages/Group";
 import {UpdateGroup} from "./Pages/UpdateGroup";
 import {TestPage} from "./Pages/Test";
 import {UpdateTest} from "./Pages/UpdateTest";
+import Header from "./Utils/Header";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<App/>}/>
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/student" element={<StudentPage/>}/>
-            <Route path="/question/:id" element ={<UpdateQuestion/>} action={({ params }) => {}}/>
-            <Route path="/question" element={<QuestionPage/>}/>
-            <Route path="/university" element={<UniversityPage/>}/>
-            <Route path="/superAdmin" element={<SuperAdminPage/>}/>
-            <Route path="/admin" element={<AdminPage/>}/>
-            <Route path="/teacher" element={<TeacherPage/>}/>
-            <Route path="/collection/:id" element ={<UpdateCollection/>} action={({ params }) => {}}/>
-            <Route path="/collection" element={<CollectionPage/>}/>
-            <Route path="/discipline/:id" element ={<UpdateDiscipline/>} action={({ params }) => {}}/>
-            <Route path="/discipline" element={<DisciplinePage/>}/>
-            <Route path="/group/:id" element ={<UpdateGroup/>} action={({ params }) => {}}/>
-            <Route path="/group" element={<GroupPage/>}/>
-            <Route path="/test/:id" element ={<UpdateTest/>} action={({ params }) => {}}/>
-            <Route path="/test" element={<TestPage/>}/>
-        </Routes>
+            <Routes>
+                <Route element={<Header/>}>
+                    <Route path="/" element={<App/>}/>
+                    <Route path="/student" element={<StudentPage/>}/>
+                    <Route path="/question/:id" element ={<UpdateQuestion/>} action={({ params }) => {}}/>
+                    <Route path="/question" element={<QuestionPage/>}/>
+                    <Route path="/university" element={<UniversityPage/>}/>
+                    <Route path="/superAdmin" element={<SuperAdminPage/>}/>
+                    <Route path="/admin" element={<AdminPage/>}/>
+                    <Route path="/teacher" element={<TeacherPage/>}/>
+
+                    <Route path="/collection/:id" element ={<UpdateCollection/>} action={({ params }) => {}}/>
+                    <Route path="/collection" element={<CollectionPage/>}/>
+                    <Route path="/discipline/:id" element ={<UpdateDiscipline/>} action={({ params }) => {}}/>
+                    <Route path="/discipline" element={<DisciplinePage/>}/>
+                    <Route path="/group/:id" element ={<UpdateGroup/>} action={({ params }) => {}}/>
+                    <Route path="/group" element={<GroupPage/>}/>
+                    <Route path="/test/:id" element ={<UpdateTest/>} action={({ params }) => {}}/>
+                    <Route path="/test" element={<TestPage/>}/>
+                </Route>
+                <Route path="/login" element={<Login/>}/>
+            </Routes>
     </BrowserRouter>
 );
 

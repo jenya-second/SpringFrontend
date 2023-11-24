@@ -2,15 +2,13 @@ import {useEffect, useState} from "react";
 
 const createTokenProvider = () => {
 
-    let _token = JSON.parse(localStorage.getItem('REACT_TOKEN_AUTH') || '') || null;
+    let _token = JSON.parse(localStorage.getItem('REACT_TOKEN_AUTH')) || null;
 
     const getExpirationDate = (jwtToken) => {
         if (!jwtToken) {
             return null;
         }
-
         const jwt = JSON.parse(atob(jwtToken.split('.')[1]));
-
         // multiply by 1000 to convert seconds into milliseconds
         return (jwt && jwt.exp && jwt.exp * 1000) || null;
     };
@@ -19,7 +17,6 @@ const createTokenProvider = () => {
         if (!exp) {
             return false;
         }
-
         return Date.now() > exp;
     };
 
@@ -29,16 +26,26 @@ const createTokenProvider = () => {
         }
 
         if (isExpired(getExpirationDate(_token.accessToken))) {
-            const updatedToken = await fetch('/update-token', {
+            await fetch(process.env.REACT_APP_LOCAL_URL+'update_token', {
                 method: 'POST',
                 body: _token.refreshToken
             })
-                .then(r => r.json());
-
-            setToken(updatedToken);
+                .then(r => r.json())
+                .then((res)=>{
+                    return res
+                })
+                .then((token)=>{
+                    if(token?.res){
+                        setToken(null)
+                        alert(token.res)
+                    }
+                    else(
+                        setToken(token)
+                    )
+                })
         }
 
-        return _token && _token.accessToken;
+        return _token.accessToken;
     };
 
     const isLoggedIn = () => {
@@ -83,31 +90,49 @@ export const createAuthProvider = () => {
 
     const tokenProvider = createTokenProvider();
 
-    const login= (newTokens) => {
+    const getUserInfo = ()=>{
+        return tokenProvider.getToken()
+            .then((res)=>{
+                if(res){
+                    return JSON.parse(atob(res.split('.')[1]))
+                }
+            })
+    }
+
+    const login= (newTokens,name) => {
         tokenProvider.setToken(newTokens);
+        localStorage.setItem('REACT_USER_NAME', name);
     };
 
     const logout = () => {
         tokenProvider.setToken(null);
+        localStorage.removeItem('REACT_USER_NAME');
     };
 
+    const getName = ()=>{
+        return localStorage.getItem('REACT_USER_NAME')
+    }
+
     const authFetch = async (input, init) => {
-        const token = await tokenProvider.getToken();
+        return await tokenProvider.getToken()
+            .then((token)=>{
+                init = init || {};
 
-        init = init || {};
-
-        init.headers = {
-            ...init.headers,
-            Authorization: `Bearer ${token}`,
-        };
-
-        return fetch(input, init);
+                init.headers = {
+                    ...init.headers,
+                    Authorization: token
+                };
+                return fetch(input, init);
+            })
     };
 
     const useAuth = () => {
         const [isLogged, setIsLogged] = useState(tokenProvider.isLoggedIn());
+        const [userInfo, setUserInfo] = useState({});
 
         useEffect(() => {
+            getUserInfo()
+                .then(setUserInfo)
             const listener = (newIsLogged) => {
                 setIsLogged(newIsLogged);
             };
@@ -118,13 +143,15 @@ export const createAuthProvider = () => {
             };
         }, []);
 
-        return [isLogged];
+        return [isLogged,userInfo];
     };
 
     return {
         useAuth,
         authFetch,
         login,
-        logout
+        logout,
+        getName,
+        getUserInfo
     }
 };

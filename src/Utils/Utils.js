@@ -1,7 +1,9 @@
 import React, {forwardRef, useImperativeHandle, useState} from "react";
+import {createAuthProvider} from "./Auth";
+export const {useAuth, authFetch, login, logout, getName} = createAuthProvider();
 
 export function postQuery(url,par){
-    return fetch(process.env.REACT_APP_LOCAL_URL+url,{
+    return authFetch(process.env.REACT_APP_LOCAL_URL+url,{
         method: "POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(par)
@@ -14,10 +16,18 @@ export function postQuery(url,par){
             }
         })
         .then(res=>res.json())
+        .then((res)=>{
+            if(res?.res)(
+                logout()
+            )
+            else{
+                return res
+            }
+        })
 }
 
 export function getQuery(url){
-    return fetch(process.env.REACT_APP_LOCAL_URL+url)
+    return authFetch(process.env.REACT_APP_LOCAL_URL+url)
         .then((res)=>{
             if (res.ok) {
                 return res
@@ -26,7 +36,14 @@ export function getQuery(url){
             }
         })
         .then(res=>res.json())
-
+        .then((res)=>{
+            if(res?.res)(
+                logout()
+            )
+            else{
+                return res
+            }
+        })
 }
 
 export function toggleAddForm(){
