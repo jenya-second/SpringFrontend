@@ -24,7 +24,6 @@ const createTokenProvider = () => {
         if (!_token) {
             return null;
         }
-
         if (isExpired(getExpirationDate(_token.accessToken))) {
             await fetch(process.env.REACT_APP_LOCAL_URL+'update_token', {
                 method: 'POST',
@@ -122,6 +121,7 @@ export const createAuthProvider = () => {
                     ...init.headers,
                     Authorization: token
                 };
+
                 return fetch(input, init);
             })
     };

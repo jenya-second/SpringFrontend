@@ -17,6 +17,7 @@ export function QuestionPage() {
         height: "100%"
     }
     const[questions,setQuestions]=useState([])
+    console.log(questions)
     useEffect(()=>{
         getQuestions()
             .then(setQuestions)
@@ -64,7 +65,7 @@ function QuestionMin({setQ,question}) {
             <div>
                 <div style={st}>{question.id}</div>
                 <div style={st}>{question.type}</div>
-                <div style={st}>{question.name}</div>
+                <div style={st}>{question.name + " isValid: " + question.valid}</div>
             </div>
             <Link style={st2} to={"/question/"+question.id}>update</Link>
             <div style={st2} onClick={del}>delete</div>
@@ -85,7 +86,7 @@ function AddQuestion({setQ}) {
     const[type,setType]=useState('1')
     const handleClick=(e)=>{
         e.preventDefault()
-        const q= {name,type}
+        const q= {name,type,is_valid:false}
         addQuestion(q)
         .then(()=>{
             getQuestions()

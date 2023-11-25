@@ -17,11 +17,13 @@ export function postQuery(url,par){
         })
         .then(res=>res.json())
         .then((res)=>{
-            if(res?.res)(
-                logout()
-            )
+            if(res?.res) {
+                if (res.res === "Access denied") {
+                    logout()
+                }
+            }
             else{
-                return res
+                return res || {}
             }
         })
 }
@@ -37,11 +39,13 @@ export function getQuery(url){
         })
         .then(res=>res.json())
         .then((res)=>{
-            if(res?.res)(
-                logout()
-            )
+            if(res?.res) {
+                if (res.res === "Access denied") {
+                    logout()
+                }
+            }
             else{
-                return res
+                return res || {}
             }
         })
 }
