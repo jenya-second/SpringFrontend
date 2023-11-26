@@ -65,7 +65,8 @@ function AddGroupToQuestion({setQ}) {
     const[questions,setQuestions]=useState([])
     const handleClick=(e)=>{
         e.preventDefault()
-        const q= {groupId:params.id,questionId:question.id}
+        const q= {groupId:parseInt(params.id),questionId:question.id}
+        console.log(q)
         addGroupToQuestion(q)
             .then(()=>{
                 getGroupById(params.id)

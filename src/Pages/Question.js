@@ -93,7 +93,7 @@ function AddQuestion({setQ}) {
                     setQ(res)
                     toggleAddForm()
                     setName("")
-                    setType("1")
+                    setType("SingleChoice")
                 })
 
         })
@@ -107,8 +107,8 @@ function AddQuestion({setQ}) {
                        onChange={(e)=>setName(e.target.value)}
                 />
                 <select value={type} onChange={(e)=>setType(e.target.value)} id="type">
-                    <option value="1">SingleChoice</option>
-                    <option value="2">MultipleChoice</option>
+                    <option value="SingleChoice">SingleChoice</option>
+                    <option value="MultiplyChoice">MultipleChoice</option>
                     <option value="3">CalculationTask</option>
                 </select>
                 <button color="secondary" onClick={handleClick}>

@@ -91,6 +91,7 @@ export const ScrollBox = forwardRef((props,ref)=> {
                     {i.name}
                 </div>
             ))}
+            {dat.length === 0 && <div style={st1}>No elements for choose</div>}
         </div>
     </div>
 })

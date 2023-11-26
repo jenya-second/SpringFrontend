@@ -47,7 +47,7 @@ function AnswerMin({setQ,answer}){
     }
     return(
         <div>
-            <div key={answer.id}> {answer.id+ "  " +answer.answer+ "  " +answer.correct}</div>
+            <div key={answer.id}> {answer.id+ "  " +answer.name+ "  " +answer.correct}</div>
             <div onClick={del}>delete</div>
         </div>
     )
@@ -63,11 +63,11 @@ function AddAnswer({setQ,question}) {
         background: "#0077ff",
     }
     let params = useParams();
-    const[answer,setAnswer]=useState('')
+    const[name,setName]=useState('')
     const[correct,setCorrect]=useState(false)
     const handleClick=(e)=>{
         e.preventDefault()
-        const q= {answer:answer,
+        const q= {name:name,
             correct:correct,
             question:question
         }
@@ -77,7 +77,7 @@ function AddAnswer({setQ,question}) {
                     .then((res)=>{
                         setQ(res)
                         toggleAddForm()
-                        setAnswer("")
+                        setName("")
                         setCorrect(false)
                     })
             })
@@ -87,8 +87,8 @@ function AddAnswer({setQ,question}) {
             <div onClick={toggleAddForm}>X</div>
             <form noValidate autoComplete="off">
                 <input id="question"
-                       value={answer}
-                       onChange={(e)=>setAnswer(e.target.value)}
+                       value={name}
+                       onChange={(e)=>setName(e.target.value)}
                 />
                 <input checked={correct}  onChange={(e)=>{setCorrect(e.target.checked)}} type="checkbox" id="correct" name="correct" />
                 <label htmlFor="correct">Correct?</label>
