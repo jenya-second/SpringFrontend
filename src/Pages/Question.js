@@ -17,7 +17,6 @@ export function QuestionPage() {
         height: "100%"
     }
     const[questions,setQuestions]=useState([])
-    console.log(questions)
     useEffect(()=>{
         getQuestions()
             .then(setQuestions)

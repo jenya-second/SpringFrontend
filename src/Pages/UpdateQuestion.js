@@ -23,8 +23,9 @@ export function UpdateQuestion() {
 
     return(
         <div>
-            <AddAnswer setQ={setAnswers}/>
-            <div>{question.id+" "+question.question+" "+question.type}</div>
+            {!question.valid && <>Question is wrong formed. You still can chose it in collections and groups, but it won't be chosen in tests</>}
+            <AddAnswer setQ={setAnswers} question={question}/>
+            <div>{question.id+" "+question.name+" "+question.type}</div>
             <div onClick={toggleAddForm}>Add answer</div>
             <div>
                 {answers.map(answer=>(
@@ -40,7 +41,7 @@ function AnswerMin({setQ,answer}){
         e.preventDefault()
         delAnswer(answer.id)
             .then(()=>{
-                getAnswersByQuestion(answer.questionId)
+                getAnswersByQuestion(answer.question.id)
                     .then(setQ)
             })
     }
@@ -52,7 +53,7 @@ function AnswerMin({setQ,answer}){
     )
 }
 
-function AddAnswer({setQ}) {
+function AddAnswer({setQ,question}) {
     let st={
         position:"fixed",
         width: "50%",
@@ -68,7 +69,7 @@ function AddAnswer({setQ}) {
         e.preventDefault()
         const q= {answer:answer,
             correct:correct,
-            questionId:params.id
+            question:question
         }
         addAnswer(q)
             .then(()=>{
