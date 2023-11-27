@@ -6,42 +6,33 @@ import {toggleAddForm} from "../Utils/Utils";
 
 export function UpdateQuestion() {
     let params = useParams();
-    const[question, setQuestion]=useState({})
-    const[answers, setAnswers]=useState([])
-
+    const[question, setQuestion]=useState({answers:[]})
     useEffect(()=>{
         getQuestionById(params.id)
-            .then((res)=>{
-                setQuestion(res)
-                return res;
-            })
-            .then((res)=>{
-                getAnswersByQuestion(res.id)
-                    .then(setAnswers)
-            })
+            .then(setQuestion)
     },[])
 
     return(
         <div>
-            {!question.valid && <>Question is wrong formed. You still can chose it in collections and groups, but it won't be chosen in tests</>}
-            <AddAnswer setQ={setAnswers} question={question}/>
+            {!question?.valid && <>Question is wrong formed. You still can chose it in collections and groups, but it won't be chosen in tests</>}
+            <AddAnswer setQ={setQuestion} question={question}/>
             <div>{question.id+" "+question.name+" "+question.type}</div>
             <div onClick={toggleAddForm}>Add answer</div>
             <div>
-                {answers.map(answer=>(
-                    <AnswerMin key={answer.id} answer={answer} setQ={setAnswers}/>
+                {question.answers.map(answer=>(
+                    <AnswerMin key={answer.id} answer={answer} setQ={setQuestion} question={question}/>
                 ))}
             </div>
         </div>
     )
 }
 
-function AnswerMin({setQ,answer}){
+function AnswerMin({setQ,answer,question}){
     const del=(e)=>{
         e.preventDefault()
         delAnswer(answer.id)
             .then(()=>{
-                getAnswersByQuestion(answer.question.id)
+                getQuestionById(question.id)
                     .then(setQ)
             })
     }
@@ -73,7 +64,7 @@ function AddAnswer({setQ,question}) {
         }
         addAnswer(q)
             .then(()=>{
-                getAnswersByQuestion(params.id)
+                getQuestionById(params.id)
                     .then((res)=>{
                         setQ(res)
                         toggleAddForm()

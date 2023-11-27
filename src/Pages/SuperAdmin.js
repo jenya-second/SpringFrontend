@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {toggleAddForm} from "../Utils/Utils";
+import {getNames, toggleAddForm} from "../Utils/Utils";
 import {addSuperAdmin, delSuperAdmin, getSuperAdmins} from "../Requests/SuperAdminRequests";
 
 
@@ -53,9 +53,14 @@ function AddSuperAdmin({setQ}) {
     }
     const[login,setLogin]=useState('')
     const[pass,setPass]=useState('')
+    const[names,setNames]=useState([])
 
     const handleClick=(e)=>{
         e.preventDefault()
+        if(names.includes(login) || login<1){
+            alert("Wrong login")
+            return;
+        }
         const q= {login,pass}
         addSuperAdmin(q)
             .then(()=>{
@@ -70,9 +75,16 @@ function AddSuperAdmin({setQ}) {
             })
     }
 
+    useEffect(()=>{
+        getNames()
+            .then(setNames)
+    },[])
+
     return <div id="addForm" style={st} hidden>
         <div onClick={toggleAddForm}>X</div>
         <form noValidate autoComplete="off">
+            {names.includes(login) && <div>Login already exists</div>}
+            {login<1 && <div>Wrong login</div>}
             <input id="login"
                    value={login}
                    onChange={(e)=>setLogin(e.target.value)}

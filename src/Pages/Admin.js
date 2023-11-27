@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {ScrollBox, toggleAddForm} from "../Utils/Utils";
+import {getNames, ScrollBox, toggleAddForm} from "../Utils/Utils";
 import {getUniversities} from "../Requests/UniversityRequests";
 import {addAdmin, delAdmin, getAdmins} from "../Requests/AdminRequests";
 
@@ -57,8 +57,14 @@ function AddAdmin({setQ}) {
     const[pass,setPass]=useState('')
     const[university,setUniversity]=useState({})
     const[universities,setUniversities]=useState([])
+    const[names,setNames]=useState([])
+
     const handleClick=(e)=>{
         e.preventDefault()
+        if(names.includes(login) || login<1){
+            alert("Wrong login")
+            return;
+        }
         const q= {name,login,pass,university}
         addAdmin(q)
             .then(()=>{
@@ -75,7 +81,9 @@ function AddAdmin({setQ}) {
             })
     }
     useEffect(()=>{
-        getUniversities ()
+        getNames()
+            .then(setNames)
+        getUniversities()
             .then(setUniversities)
     },[])
 
@@ -86,6 +94,8 @@ function AddAdmin({setQ}) {
                    value={name}
                    onChange={(e)=>setName(e.target.value)}
             />
+            {names.includes(login) && <div>Login already exists</div>}
+            {login<1 && <div>Wrong login</div>}
             <input id="login"
                    value={login}
                    onChange={(e)=>setLogin(e.target.value)}

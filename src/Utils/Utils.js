@@ -2,6 +2,10 @@ import React, {forwardRef, useImperativeHandle, useState} from "react";
 import {createAuthProvider} from "./Auth";
 export const {useAuth, authFetch, login, logout, getName} = createAuthProvider();
 
+export function getNames(){
+    return getQuery("names")
+}
+
 export function postQuery(url,par){
     return authFetch(process.env.REACT_APP_LOCAL_URL+url,{
         method: "POST",
