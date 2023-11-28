@@ -25,10 +25,13 @@ export function UpdateTest() {
     },[])
 
     return(
-        <div>
+        <div className="m-3">
             <AddTestToGroup setQ={setTestToGroups}/>
-            <div>{test.id+" "+test.name + "   collection: "+ test.collection?.name}</div>
-            <div onClick={toggleAddForm}>Add group</div>
+            <div className="bg-primary-subtle p-3 text-primary-emphasis fs-5 rounded-2 d-grid">
+                <div>{"Name: "+test.name}</div>
+                <div>{"Collection: "+ test.collection?.name}</div>
+                <div className="btn btn-secondary gap-2 d-md-block" onClick={toggleAddForm}>Add group</div>
+            </div>
             <div>
                 {testToGroups.map(testToGroup=>(
                     <TestToGroupMin key={testToGroup.id} testToGroup={testToGroup} setQ={setTestToGroups}/>
@@ -49,11 +52,14 @@ function TestToGroupMin({setQ,testToGroup}){
             })
     }
     return(
-        <div>
-            <div>
-                <div>{testToGroup.group.id + " " + testToGroup.group.name + " " + testToGroup.questionsCount}</div>
+        <div className="border border-success bg-success-subtle m-1 p-2 text-primary-emphasis fs-6 rounded-4 d-grid">
+            <div className="bg-primary-subtle border border-primary p-1 text-primary-emphasis fs-6 rounded-2 d-grid">
+                <div>{"Group: " + testToGroup.group.name}</div>
+                <div>{"Questions count: " + testToGroup.questionsCount}</div>
             </div>
-            <div onClick={del}>delete</div>
+            <div className="d-inline">
+                <div className="btn btn-danger m-1" onClick={del}>delete</div>
+            </div>
         </div>
     )
 }
@@ -66,7 +72,7 @@ function AddTestToGroup({setQ}) {
         height: "50%",
         left:"25%",
         top:"25%",
-        background: "#0077ff",
+        background: "#6ca5ff",
     }
     const scrollRef = useRef(null);
     const[test,setTest]=useState({})
@@ -97,18 +103,24 @@ function AddTestToGroup({setQ}) {
             })
     },[])
 
-    return <div id="addForm" style={st} hidden>
-        <div onClick={toggleAddForm}>X</div>
-        <form noValidate autoComplete="off">
-            <input id="countQuestions"
-                   type="number"
-                   value={questionsCount}
-                   onChange={(e)=>setQuestionsCount(e.target.value)}
-            />
-            <ScrollBox ref={scrollRef} setQ={setGroup} list={groups}/>
-            <button color="secondary" onClick={handleClick}>
-                Submit
-            </button>
+    return <div id="addForm" className="rounded-3" style={st} hidden>
+        <div className="m-3 btn-close" onClick={toggleAddForm}></div>
+        <form className="m-3" noValidate autoComplete="off">
+            <div className="m-3">
+                <label htmlFor="countQuestions" className="form-label">Count questions</label>
+                <input id="countQuestions"
+                       type="number"
+                       className="form-control"
+                       value={questionsCount}
+                       onChange={(e)=>setQuestionsCount(e.target.value)}
+                />
+            </div>
+            <ScrollBox ref={scrollRef} setQ={setGroup} list={groups} item={"Group"}/>
+            <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button className="btn btn-primary" onClick={handleClick}>
+                    Submit
+                </button>
+            </div>
         </form>
     </div>;
 }

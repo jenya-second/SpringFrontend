@@ -4,18 +4,6 @@ import {addQuestion, delQuestion, getQuestions} from "../Requests/QuestionReques
 import {toggleAddForm} from "../Utils/Utils";
 
 export function QuestionPage() {
-    let st={
-        verticalAlign: "top",
-        width: "90%",
-        height: "90%",
-        background: "#00ffc9",
-        color: "#000",
-        overflow: "scroll"
-    }
-    let ss={
-        width: "100%",
-        height: "100%"
-    }
     const[questions,setQuestions]=useState([])
     useEffect(()=>{
         getQuestions()
@@ -23,11 +11,13 @@ export function QuestionPage() {
     },[])
 
     return(
-        <div style={ss}>
+        <div className="m-3">
             <AddQuestion setQ={setQuestions}/>
-            <div>Questions</div>
-            <div onClick={toggleAddForm}>Add question</div>
-            <div style={st}>
+            <div className="bg-primary-subtle p-3 text-primary-emphasis fs-5 rounded-2 d-grid">
+                <div>Questions</div>
+                <div className="btn btn-secondary gap-2 d-md-block" onClick={toggleAddForm}>Add question</div>
+            </div>
+            <div>
                 {questions.map(question=>(
                     <QuestionMin setQ={setQuestions} question={question} key={question.id}/>
                 ))}
@@ -37,20 +27,6 @@ export function QuestionPage() {
 }
 
 function QuestionMin({setQ,question}) {
-    let st={
-        display:"inline-block",
-
-        margin:"3px"
-    }
-    let st1={
-        border:"solid",
-        margin:"2px"
-    }
-    let st2={
-        display:"inline-block",
-        border:"solid",
-        margin:"3px"
-    }
     const del=(e)=>{
         e.preventDefault()
         delQuestion(question.id)
@@ -60,14 +36,16 @@ function QuestionMin({setQ,question}) {
         })
     }
     return(
-        <div style={st1}>
-            <div>
-                <div style={st}>{question.id}</div>
-                <div style={st}>{question.type}</div>
-                <div style={st}>{question.name + " isValid: " + question.valid}</div>
+        <div className="border border-success bg-success-subtle m-1 p-2 text-primary-emphasis fs-6 rounded-4 d-grid">
+            <div className="bg-primary-subtle border border-primary p-1 text-primary-emphasis fs-6 rounded-2 d-grid">
+                <div>{"Name: " + question.name}</div>
+                <div>{"Type: " + question.type}</div>
+                <div>{"isValid: " + question.valid}</div>
             </div>
-            <Link style={st2} to={"/question/"+question.id}>update</Link>
-            <div style={st2} onClick={del}>delete</div>
+            <div className="d-inline">
+                <div className="btn btn-danger m-1" onClick={del}>delete</div>
+                <Link className="btn btn-info" to={"/question/"+question.id}>update</Link>
+            </div>
         </div>
     )
 }
@@ -79,10 +57,10 @@ function AddQuestion({setQ}) {
         height: "50%",
         left:"25%",
         top:"25%",
-        background: "#0077ff",
+        background: "#6ca5ff",
     }
     const[name,setName]=useState('')
-    const[type,setType]=useState('1')
+    const[type,setType]=useState('SingleChoice')
     const handleClick=(e)=>{
         e.preventDefault()
         const q= {name,type,is_valid:false}
@@ -99,21 +77,30 @@ function AddQuestion({setQ}) {
         })
     }
     return(
-        <div id="addForm" style={st} hidden>
-            <div onClick={toggleAddForm}>X</div>
-            <form noValidate autoComplete="off">
-                <input id="name"
-                       value={name}
-                       onChange={(e)=>setName(e.target.value)}
-                />
-                <select value={type} onChange={(e)=>setType(e.target.value)} id="type">
-                    <option value="SingleChoice">SingleChoice</option>
-                    <option value="MultiplyChoice">MultipleChoice</option>
-                    <option value="3">CalculationTask</option>
-                </select>
-                <button color="secondary" onClick={handleClick}>
-                    Submit
-                </button>
+        <div id="addForm" className="rounded-3" style={st} hidden>
+            <div className="m-3 btn-close" onClick={toggleAddForm}></div>
+            <form className="m-3" noValidate autoComplete="off">
+                <div className="m-3">
+                    <label htmlFor="name" className="form-label">Name</label>
+                    <input id="name"
+                           className="form-control"
+                           value={name}
+                           onChange={(e)=>setName(e.target.value)}
+                    />
+                </div>
+                <div className="m-3">
+                    <label htmlFor="name" className="form-label">Name</label>
+                    <select className="form-select" value={type} onChange={(e)=>setType(e.target.value)} id="type">
+                        <option value="SingleChoice">SingleChoice</option>
+                        <option value="MultiplyChoice">MultipleChoice</option>
+                        <option value="3">CalculationTask</option>
+                    </select>
+                </div>
+                <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button className="btn btn-primary" onClick={handleClick}>
+                        Submit
+                    </button>
+                </div>
             </form>
         </div>
     )

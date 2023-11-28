@@ -58,7 +58,7 @@ function AddDisciplineToCollection({setQ}) {
         height: "50%",
         left:"25%",
         top:"25%",
-        background: "#0077ff",
+        background: "#6ca5ff",
     }
     const scrollRef = useRef(null);
     const[collection,setCollection]=useState({})

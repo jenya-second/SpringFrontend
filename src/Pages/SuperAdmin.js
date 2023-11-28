@@ -11,12 +11,14 @@ export default function SuperAdminPage(){
             .then(setSuperAdmins)
     }, []);
 
-    return <div>
+    return <div className="m-3">
         <AddSuperAdmin setQ={setSuperAdmins}/>
-        <div>Super Admins</div>
-        <div onClick={toggleAddForm}>Add Super Admin</div>
+        <div className="bg-primary-subtle p-3 text-primary-emphasis fs-5 rounded-2 d-grid">
+            <div>Super Admins</div>
+            <div className="btn btn-secondary gap-2 d-md-block" onClick={toggleAddForm}>Add Super Admin</div>
+        </div>
         <div>
-            {superAdmins.map(superAdmin=>(
+            {superAdmins.sort().map(superAdmin=>(
                 <SuperAdminMin setQ={setSuperAdmins} superAdmin={superAdmin} key={superAdmin.id}/>
             ))}
         </div>
@@ -33,11 +35,13 @@ export function SuperAdminMin({setQ,superAdmin}){
             })
     }
     return(
-        <div>
-            <div>
-                <div>{superAdmin.id + " " + superAdmin.login + " " + superAdmin.pass}</div>
+        <div className="border border-success bg-success-subtle m-1 p-2 text-primary-emphasis fs-6 rounded-4 d-grid">
+            <div className="bg-primary-subtle border border-primary p-1 text-primary-emphasis fs-6 rounded-2 d-grid">
+                <div>{"Login: " + superAdmin.login}</div>
+                <div>{"Password: " + superAdmin.pass}</div>
             </div>
-            <div onClick={del}>delete</div>
+            <div className="d-inline"><div className="btn btn-secondary" onClick={del}>delete</div></div>
+
         </div>
     )
 }
@@ -70,6 +74,8 @@ function AddSuperAdmin({setQ}) {
                         toggleAddForm()
                         setLogin("")
                         setPass("")
+                        getNames()
+                            .then(setNames)
                     })
 
             })
@@ -80,22 +86,32 @@ function AddSuperAdmin({setQ}) {
             .then(setNames)
     },[])
 
-    return <div id="addForm" style={st} hidden>
-        <div onClick={toggleAddForm}>X</div>
-        <form noValidate autoComplete="off">
-            {names.includes(login) && <div>Login already exists</div>}
-            {login<1 && <div>Wrong login</div>}
-            <input id="login"
-                   value={login}
-                   onChange={(e)=>setLogin(e.target.value)}
-            />
-            <input id="pass"
-                   value={pass}
-                   onChange={(e)=>setPass(e.target.value)}
-            />
-            <button color="secondary" onClick={handleClick}>
-                Submit
-            </button>
+    return <div id="addForm" style={st} className="rounded-3" hidden>
+        <div className="m-3 btn-close" onClick={toggleAddForm}></div>
+        <form className="m-3" noValidate autoComplete="off">
+            <div className="m-3">
+                <label htmlFor="login" className="form-label">Login</label>
+                <input id="login"
+                       className="form-control"
+                       value={login}
+                       onChange={(e)=>setLogin(e.target.value)}
+                />
+                {names.includes(login) && <span className="form-text position-absolute text-danger">Login already exists</span>}
+                {login<1 && <span className="form-text position-absolute text-danger">Wrong login</span>}
+            </div>
+            <div className="m-3">
+                <label htmlFor="pass" className="form-label">Password</label>
+                <input id="pass"
+                       className="form-control"
+                       value={pass}
+                       onChange={(e)=>setPass(e.target.value)}
+                />
+            </div>
+            <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button className="btn btn-primary" onClick={handleClick}>
+                    Submit
+                </button>
+            </div>
         </form>
     </div>;
 }

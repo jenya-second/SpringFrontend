@@ -35,21 +35,38 @@ export default function Login() {
                 }
             })
     }
-
+    let st={
+        position:"fixed",
+        width: "50%",
+        height: "50%",
+        left:"25%",
+        top:"25%",
+        background: "#6ca5ff",
+    }
     return(
-        <div>
-            <form noValidate autoComplete="off">
-                <input id="name"
-                       value={name}
-                       onChange={(e)=>setName(e.target.value)}
-                />
-                <input id="pass"
-                       value={pass}
-                       onChange={(e)=>setPass(e.target.value)}
-                />
-                <button color="secondary" onClick={handleClick}>
-                    Submit
-                </button>
+        <div style={st} className="rounded-3">
+            <form className="m-3" noValidate autoComplete="off">
+                <div className="m-3">
+                    <label htmlFor="name" className="form-label">Login</label>
+                    <input id="name"
+                           className="form-control"
+                           value={name}
+                           onChange={(e)=>setName(e.target.value)}
+                    />
+                </div>
+                <div className="m-3">
+                    <label htmlFor="pass" className="form-label">Password</label>
+                    <input id="pass"
+                           className="form-control"
+                           value={pass}
+                           onChange={(e)=>setPass(e.target.value)}
+                    />
+                </div>
+                <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button className="btn btn-primary" onClick={handleClick}>
+                        Submit
+                    </button>
+                </div>
             </form>
         </div>
     )

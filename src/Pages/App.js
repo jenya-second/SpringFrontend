@@ -1,30 +1,28 @@
-import '../css/App.css';
 import React from 'react';
 import {Link} from "react-router-dom";
 import {createAuthProvider} from "../Utils/Auth";
-import Header from "../Utils/Header";
 export const {useAuth, getUserInfo, authFetch, login, logout, getName} = createAuthProvider();
 
 function App() {
     const [logged,userInfo] = useAuth();
     return (
-        <div>
+        <div className="list-group m-2">
             {userInfo.role>2 &&
                 (
-                    <div><Link to={"/superAdmin"}>SuperAdmin</Link></div>
+                    <Link className="list-group-item list-group-item-action" to={"/superAdmin"}>SuperAdmin</Link>
             )}
             {userInfo.role>1 &&(<>
-            <div><Link to={"/admin"}>Admin</Link></div>
-            <div><Link to={"/teacher"}>Teacher</Link></div>
+            <Link className="list-group-item list-group-item-action" to={"/admin"}>Admin</Link>
+            <Link className="list-group-item list-group-item-action" to={"/teacher"}>Teacher</Link>
             </>)}
-            <div><Link to={"/student"}>Student</Link></div>
-            <div><Link to={"/university"}>University</Link></div>
-            <div><Link to={"/students_answer"}>StudentsAnswer</Link></div>
-            <div><Link to={"/discipline"}>Disciplines</Link></div>
-            <div><Link to={"/collection"}>Collection</Link></div>
-            <div><Link to={"/group"}>Group</Link></div>
-            <div><Link to={"/question"}>Question</Link></div>
-            <div><Link to={"/test"}>Test</Link></div>
+            <Link className="list-group-item list-group-item-action" to={"/student"}>Student</Link>
+            <Link className="list-group-item list-group-item-action" to={"/university"}>University</Link>
+            <Link className="list-group-item list-group-item-action" to={"/students_answer"}>StudentsAnswer</Link>
+            <Link className="list-group-item list-group-item-action" to={"/discipline"}>Disciplines</Link>
+            <Link className="list-group-item list-group-item-action" to={"/collection"}>Collection</Link>
+            <Link className="list-group-item list-group-item-action" to={"/group"}>Group</Link>
+            <Link className="list-group-item list-group-item-action" to={"/question"}>Question</Link>
+            <Link className="list-group-item list-group-item-action" to={"/test"}>Test</Link>
         </div>
     );
 }

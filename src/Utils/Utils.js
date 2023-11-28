@@ -77,9 +77,11 @@ export const ScrollBox = forwardRef((props,ref)=> {
     useImperativeHandle(ref, () => ({
         a(){return setInp('');}
     }));
-    return <div ref={ref}>
+    return <div ref={ref} className="m-3">
+        <label htmlFor="scrollInput" className="form-label">{props.item}</label>
         <input id="scrollInput"
                value={inp}
+               className="form-control"
                onChange={(e)=>{setInp(e.target.value)}}
                onFocus={()=>{
                    document.getElementById("scrollItems").hidden=false

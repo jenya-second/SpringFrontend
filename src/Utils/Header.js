@@ -16,9 +16,9 @@ export default function Header() {
 
     return (
         <div>
-            <header>
+            <header className="bg-primary-subtle p-3 text-primary-emphasis fs-4">
                 Hello, {getName()}
-                <div onClick={clickHandle}>Logout</div>
+                <div className="btn btn-secondary position-absolute end-0 me-3" onClick={clickHandle}>Logout</div>
             </header>
             <Outlet/>
         </div>
